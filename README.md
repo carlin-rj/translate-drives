@@ -44,7 +44,7 @@ $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::GOOGLE)->translate($query);
 ```
 
-### Alibaba
+### Alibaba cloud
 
 ```php
 use Carlin\TranslateDrivers\Supports\Provider;
