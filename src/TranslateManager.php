@@ -134,7 +134,7 @@ class TranslateManager
     /**
      * Format the server configuration.
      */
-    public function formatConfig(array $driverConfig): array
+	protected function formatConfig(array $driverConfig): array
     {
         return array_merge([
             'app_id' => $driverConfig['app_id'] ?? '',
