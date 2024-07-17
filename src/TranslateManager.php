@@ -104,7 +104,7 @@ class TranslateManager
      */
     public function extend(string $driver, Closure $callback): self
     {
-        $this->customCreators[$driver] = $callback;
+        $this->customDrivers[$driver] = $callback;
 
         return $this;
     }
@@ -168,6 +168,6 @@ class TranslateManager
      */
     protected function callCustomDriver(string $driver): AbstractProvider
     {
-        return $this->customDrivers[$driver]($this->config);
+        return $this->customDrivers[$driver]($this->config->toArray());
     }
 }

@@ -55,7 +55,7 @@ class TranslateManagerTest extends TestCase
 	public function testExtend(): void
 	{
 		$query = '我喜欢你的冷态度 :test';
-		$res = $this->manager->extend('my_driver', function ($config) {
+		$res = $this->manager->extend('my_driver', function ($allConfig) {
 			return new class extends AbstractProvider
 			{
 				public function __construct(?string $app_id = null, ?string $app_key = null, array $config = [])
