@@ -54,7 +54,7 @@ abstract class AbstractProvider implements ProviderInterface
      * @param null|string $app_key
      * @param array  $config
      */
-    public function __construct(?string $app_id, ?string $app_key, array $config = [])
+    public function __construct(?string $app_id = null, ?string $app_key = null, array $config = [])
     {
         $this->appId = $app_id;
         $this->appKey = $app_key;

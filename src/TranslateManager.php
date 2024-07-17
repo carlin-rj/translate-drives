@@ -23,7 +23,7 @@ class TranslateManager
     /**
      * The registered custom driver creators.
      */
-    protected array $customCreators = [];
+    protected array $customDrivers = [];
 
     /**
      * The initial drivers.
@@ -48,11 +48,7 @@ class TranslateManager
      */
     public function __construct(array $config)
     {
-        $this->config = new Config($config);
-
-        if (! empty($config['default'])) {
-            $this->setDefaultDriver($config['default']);
-        }
+		$this->config($config);
     }
 
     /**
@@ -60,9 +56,13 @@ class TranslateManager
      *
      * @return $this
      */
-    public function config(Config $config): self
+    public function config(array $config): self
     {
-        $this->config = $config;
+		$this->config = new Config($config);
+
+		if (! empty($config['default'])) {
+			$this->setDefaultDriver($config['default']);
+		}
 
         return $this;
     }
@@ -156,8 +156,8 @@ class TranslateManager
             ));
         }
 
-        if (isset($this->customCreators[$driver])) {
-            return $this->callCustomCreator($driver);
+        if (isset($this->customDrivers[$driver])) {
+            return $this->callCustomDriver($driver);
         }
 
         throw new InvalidArgumentException("Driver [{$driver}] not supported.");
@@ -166,8 +166,8 @@ class TranslateManager
     /**
      * Call a custom driver creator.
      */
-    protected function callCustomCreator(string $driver): AbstractProvider
+    protected function callCustomDriver(string $driver): AbstractProvider
     {
-        return $this->customCreators[$driver]($this->config);
+        return $this->customDrivers[$driver]($this->config);
     }
 }

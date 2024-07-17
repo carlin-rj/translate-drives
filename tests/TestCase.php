@@ -16,9 +16,9 @@ class TestCase extends \PHPUnit\Framework\TestCase
 {
 	protected ?TranslateManager $manager = null;
 
-    protected function setUp(): void
-    {
-		$config = [
+	protected function getConfig(): array
+	{
+		return [
 			// 驱动
 			'drivers' => [
 				// 免费版
@@ -35,7 +35,11 @@ class TestCase extends \PHPUnit\Framework\TestCase
 				],
 			],
 		];
-		$this->manager = new TranslateManager($config);
+	}
+
+    protected function setUp(): void
+    {
+		$this->manager = new TranslateManager($this->getConfig());
     }
 
     protected function tearDown(): void
