@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Carlin\TranslateDrivers\Tests;
 
+use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\TranslateManager;
 
 /**
@@ -21,14 +22,14 @@ class TestCase extends \PHPUnit\Framework\TestCase
 			// 驱动
 			'drivers' => [
 				// 免费版
-				'google' => [
+				Provider::GOOGLE => [
 
 				],
-				'baidu' => [
+				Provider::BAIDU => [
 					'app_id'  => '',
 					'app_key' => '',
 				],
-				'alibaba' => [
+				Provider::ALIBABA_CLOUD => [
 					'app_id'  => '',
 					'app_key' => '',
 				],

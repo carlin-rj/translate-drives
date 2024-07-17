@@ -4,12 +4,14 @@
     "license": "Apache-2.0",
     "description": "Baidu, Alibaba Cloud Translate, and Google Translate driver package, ready to use out of the box",
     "keywords": [
+        "driver",
+        "php",
         "translate",
         "baidu",
-        "Alibaba",
+        "alibaba cloud",
         "google translate",
-        "translate drivers",
-        "php"
+        "free google translate",
+        "translate drivers"
     ],
     "autoload": {
         "psr-4": {

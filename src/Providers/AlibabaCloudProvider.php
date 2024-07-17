@@ -7,7 +7,7 @@ use Carlin\TranslateDrivers\Supports\LangCode;
 use Carlin\TranslateDrivers\Supports\Translate;
 use GuzzleHttp\Client;
 
-class AlibabaProvider extends AbstractProvider
+class AlibabaCloudProvider extends AbstractProvider
 {
     public const HTTPS_URL = 'https://mt.cn-hangzhou.aliyuncs.com';
     public const HTTP_URL = 'http://mt.cn-hangzhou.aliyuncs.com';

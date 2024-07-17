@@ -4,10 +4,11 @@ namespace Carlin\TranslateDrivers;
 
 use Carlin\TranslateDrivers\Contracts\ProviderInterface;
 use Carlin\TranslateDrivers\Providers\AbstractProvider;
-use Carlin\TranslateDrivers\Providers\AlibabaProvider;
+use Carlin\TranslateDrivers\Providers\AlibabaCloudProvider;
 use Carlin\TranslateDrivers\Providers\BaiduProvider;
 use Carlin\TranslateDrivers\Providers\GoogleProvider;
 use Carlin\TranslateDrivers\Supports\Config;
+use Carlin\TranslateDrivers\Supports\Provider;
 use Closure;
 use InvalidArgumentException;
 use RuntimeException;
@@ -28,9 +29,9 @@ class TranslateManager
      * The initial drivers.
      */
     protected array $initialDrivers = [
-		'baidu'   => BaiduProvider::class,
-		'google'  => GoogleProvider::class,
-		'alibaba' => AlibabaProvider::class,
+		Provider::BAIDU         => BaiduProvider::class,
+		Provider::GOOGLE        => GoogleProvider::class,
+		Provider::ALIBABA_CLOUD => AlibabaCloudProvider::class,
     ];
 
     protected $defaultDriver;

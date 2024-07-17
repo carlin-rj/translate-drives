@@ -1,9 +1,7 @@
-## Baidu, Alibaba Cloud Translate, and Google Translate driver package, ready to use out of the box
-
-[**简体中文 🇨🇳**](README_cn.md)
-
-### Translate driver package usage tutorial
-#### Environmental requirements
+## 百度、阿里云翻译和免费的谷歌翻译驱动程序包，开箱即用
+[**English 🇺🇸**](README.md)
+### 翻译驱动程序包使用教程
+#### 环境要求
 - `PHP` >= 8.1
 
 #### install
