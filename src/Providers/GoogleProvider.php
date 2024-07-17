@@ -10,10 +10,17 @@ use Throwable;
 
 class GoogleProvider extends AbstractProvider
 {
-	protected function handlerTranslate(string $query, $from = LangCode::Auto, $to = LangCode::EN): Translate
+	private array $langMap = [
+		LangCode::ZH    => 'zh-CN',
+		LangCode::ZH_TW => 'zh-TW',
+	];
+
+	protected function handlerTranslate(string $query, string $to = LangCode::EN, string $from = LangCode::AUTO): Translate
     {
 		try {
-			$data = GoogleTranslate::trans($query, $to, $from === LangCode::Auto ? null : $from);
+			$to = $this->langMap($to);
+			$from = $this->langMap($from);
+			$data = GoogleTranslate::trans($query, $to, $from === LangCode::AUTO ? null : $from);
 		}catch (Throwable $exception) {
 			throw new TranslateException($exception->getMessage());
 		}
@@ -23,6 +30,12 @@ class GoogleProvider extends AbstractProvider
             'dst' => $data
         ]));
     }
+
+
+	public function langMap(string $langCode): string
+	{
+		return $this->langMap[$langCode] ?? $langCode;
+	}
 
     protected function mapTranslateResult(array $translateResult): array
     {

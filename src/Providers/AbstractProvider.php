@@ -86,15 +86,15 @@ abstract class AbstractProvider implements ProviderInterface
 		return $this->config['url'] ?? (($this->config['ssl'] ?? false) ? static::HTTPS_URL : static::HTTP_URL);
 	}
 
-    abstract protected function handlerTranslate(string $query, string $from = LangCode::Auto, string $to = LangCode::EN):Translate;
+    abstract protected function handlerTranslate(string $query, string $to = LangCode::EN, string $from = LangCode::AUTO):Translate;
 
-	public function translate(string $query, string $from = LangCode::Auto, string $to = LangCode::EN):Translate
+	public function translate(string $query, string $to = LangCode::EN, string $from = LangCode::AUTO):Translate
 	{
 		$replacements = $this->getParameters($query);
 
-		$translate = $this->handlerTranslate($this->extractParameters($query), $from, $to);
+		$translate = $this->handlerTranslate($this->extractParameters($query), $to, $from);
 
-		if ($this->pattern) {
+		if (!$this->pattern) {
 		    return $translate;
 		}
 		$dst = $this->injectParameters($translate->getDst(), $replacements);

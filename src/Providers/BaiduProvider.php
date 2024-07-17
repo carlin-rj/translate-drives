@@ -28,7 +28,7 @@ class BaiduProvider extends AbstractProvider
 	 * @author: whj
 	 * @date: 2023/4/10 13:39
 	 */
-    protected function getRequestParams(string $q, string $from = LangCode::Auto, string $to = LangCode::EN): array
+    protected function getRequestParams(string $q, string $from = LangCode::AUTO, string $to = LangCode::EN): array
 	{
         $params = [
             'q' => $q,
@@ -58,7 +58,7 @@ class BaiduProvider extends AbstractProvider
 	 * @throws TranslateException
 	 * @see https://fanyi-api.baidu.com/api/trans/vip/translate
 	 */
-	protected function handlerTranslate(string $query,  string $from = LangCode::Auto, string $to = LangCode::EN): Translate
+	protected function handlerTranslate(string $query, string $to = LangCode::EN, string $from = LangCode::AUTO): Translate
 	{
 		//请求
 		$params = $this->getRequestParams($query, $from, $to);

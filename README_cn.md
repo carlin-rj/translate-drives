@@ -2,7 +2,7 @@
 [**English 🇺🇸**](README.md)
 ### 翻译驱动程序包使用教程
 #### 环境要求
-- `PHP` >= 8.1
+- `PHP` >= 8.0
 
 #### install
 ```
@@ -12,7 +12,10 @@ composer require carlin/translate-drivers
 ### 百度
 
 ```php
+use Carlin\TranslateDrivers\TranslateManager;
 use Carlin\TranslateDrivers\Supports\Provider;
+use Carlin\TranslateDrivers\Supports\LangCode;
+
 $config = [
     'drivers' => [
         Provider::BAIDU => [
@@ -23,14 +26,17 @@ $config = [
 ];
 $manager = new TranslateManager($config);
 $query = '我喜欢你的冷态度 :test';
-$res = $manager->driver(Provider::BAIDU)->translate($query);
+$res = $manager->driver(Provider::BAIDU)->translate($query,  LangCode::EN);
 ```
 
 
 ### Google
 
 ```php
+use Carlin\TranslateDrivers\TranslateManager;
 use Carlin\TranslateDrivers\Supports\Provider;
+use Carlin\TranslateDrivers\Supports\LangCode;
+
 
 $config = [
     'drivers' => [
@@ -39,13 +45,16 @@ $config = [
 ];
 $manager = new TranslateManager($config);
 $query = '我喜欢你的冷态度 :test';
-$res = $manager->driver(Provider::GOOGLE)->translate($query);
+$res = $manager->driver(Provider::GOOGLE)->translate($query,  LangCode::EN);
 ```
 
 ### 阿里云翻译
 
 ```php
+use Carlin\TranslateDrivers\TranslateManager;
 use Carlin\TranslateDrivers\Supports\Provider;
+use Carlin\TranslateDrivers\Supports\LangCode;
+
 $config = [
     'drivers' => [
         Provider::ALIBABA_CLOUD => [
@@ -56,12 +65,13 @@ $config = [
 ];
 $manager = new TranslateManager($config);
 $query = '我喜欢你的冷态度 :test';
-$res = $manager->driver(Provider::ALIBABA_CLOUD)->translate($query);
+$res = $manager->driver(Provider::ALIBABA_CLOUD)->translate($query,  LangCode::EN);
 ```
 
 ## 自定义驱动
 ```php
-
+use Carlin\TranslateDrivers\Providers\AbstractProvider;
+use Carlin\TranslateDrivers\TranslateManager;
 class MyTranslateDriver extends AbstractProvider
 {
     public function __construct(?string $app_id = null, ?string $app_key = null, array $config = [])
@@ -105,3 +115,44 @@ $res = $manager->extend('my_driver', function ($allConfig) {
     return new MyTranslateDriver(config:$config);
 })->driver('my_driver')->translate($query);
 ```
+
+## 保留翻译占位参数
+
+```preserveParameters()``` 方法允许您在执行翻译时保留字符串中的某些参数。这在处理需要从翻译中排除特定占位符的本地化文件或模板引擎时特别有用。
+
+默认正则表达式是 ```/:(\w+)/``` ，它涵盖以 : 开头的参数。对于翻译 Laravel 和其他框架的语言文件很有用。您还可以传递自定义正则表达式来修改参数语法。
+```php
+use Carlin\TranslateDrivers\TranslateManager;
+use Carlin\TranslateDrivers\Supports\Provider;
+use Carlin\TranslateDrivers\Supports\LangCode;
+
+$config = [
+    'drivers' => [
+        Provider::GOOGLE => [],
+    ],
+];
+$manager = new TranslateManager($config);
+$query = '我喜欢你的冷态度 :test';
+$res = $manager->driver(Provider::GOOGLE)->preserveParameters()->translate($query, LangCode::EN); //I like your cold attitude :test
+```
+
+或者使用自定义正则表达式:
+
+```php
+use Carlin\TranslateDrivers\TranslateManager;
+use Carlin\TranslateDrivers\Supports\Provider;
+use Carlin\TranslateDrivers\Supports\LangCode;
+
+
+$config = [
+    'drivers' => [
+        Provider::GOOGLE => [],
+    ],
+];
+$manager = new TranslateManager($config);
+$query = '我喜欢你的冷态度 {{test}}';
+$res = $manager->driver(Provider::GOOGLE)->preserveParameters('/\{\{([^}]+)\}\}/')->translate($query, LangCode::EN); //I like your cold attitude {{test}}
+```
+
+
+## 如果您有更好的翻译驱动，欢迎提交 PR

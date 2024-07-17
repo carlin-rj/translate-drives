@@ -3,7 +3,6 @@
 namespace Carlin\TranslateDrivers\Tests\Feature;
 
 use Carlin\TranslateDrivers\Providers\AbstractProvider;
-use Carlin\TranslateDrivers\Supports\Config;
 use Carlin\TranslateDrivers\Supports\LangCode;
 use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\Translate;
@@ -15,7 +14,7 @@ class TranslateManagerTest extends TestCase
 	public function testGoogle(): void
 	{
 		$query = '我喜欢你的冷态度 :test';
-		$res = $this->manager->driver(Provider::GOOGLE)->translate($query);
+		$res = $this->manager->driver(Provider::GOOGLE)->translate($query, LangCode::DE);
 		$this->assertIsObject($res);
 		$this->assertInstanceOf(Translate::class, $res);
 		echo $res->getDst();
@@ -41,12 +40,26 @@ class TranslateManagerTest extends TestCase
 		echo $res->getDst();
 	}
 
-	public function testDefaultDriver()
+	public function testDefaultDriver(): void
 	{
 		$query = '我喜欢你的冷态度 :test';
 		$config = $this->getConfig();
 		$config['default'] = Provider::GOOGLE;
 		$res = $this->manager->config($config)->driver()->translate($query);
+		$this->assertIsObject($res);
+		$this->assertInstanceOf(Translate::class, $res);
+		echo $res->getDst();
+	}
+
+	public function testPreserveParameters(): void
+	{
+		$query = '我喜欢你的冷态度 {{length}}';
+		$res = $this->manager->driver(Provider::GOOGLE)->preserveParameters()->translate($query);
+		$this->assertIsObject($res);
+		$this->assertInstanceOf(Translate::class, $res);
+		echo $res->getDst();
+
+		$res = $this->manager->driver(Provider::GOOGLE)->preserveParameters('/\{\{([^}]+)\}\}/')->translate($query);
 		$this->assertIsObject($res);
 		$this->assertInstanceOf(Translate::class, $res);
 		echo $res->getDst();
@@ -63,7 +76,7 @@ class TranslateManagerTest extends TestCase
 					parent::__construct($app_id, $app_key, $config);
 				}
 
-				protected function handlerTranslate(string $query, string $from = LangCode::Auto, string $to = LangCode::EN): Translate
+				protected function handlerTranslate(string $query, string $to = LangCode::EN, string $from = LangCode::AUTO): Translate
 				{
 					//you translation code
 					return new Translate([

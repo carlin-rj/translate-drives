@@ -5,7 +5,7 @@ namespace Carlin\TranslateDrivers\Supports;
 class LangCode
 {
     /** 自动检测 */
-    public const Auto = 'auto';
+    public const AUTO = 'auto';
     /** 中文 */
     public const ZH = 'zh';
     /** 繁体中文 */

@@ -14,10 +14,9 @@ interface ProviderInterface
      * Translate giving string from.
      *
      * @param string $query
-     * @param string $from
      * @param string $to
-     *
-     * @return mixed
+	 * @param string $from
+	 * @return mixed
      */
-    public function translate(string $query,  string $from = LangCode::Auto, string $to = LangCode::EN):Translate;
+    public function translate(string $query,  string $to = LangCode::EN, string $from = LangCode::AUTO):Translate;
 }

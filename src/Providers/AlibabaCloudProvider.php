@@ -12,9 +12,9 @@ class AlibabaCloudProvider extends AbstractProvider
     public const HTTPS_URL = 'https://mt.cn-hangzhou.aliyuncs.com';
     public const HTTP_URL = 'http://mt.cn-hangzhou.aliyuncs.com';
 
-	protected function handlerTranslate(string $query, $from = LangCode::Auto, $to = LangCode::EN): Translate
+	protected function handlerTranslate(string $query, string $to = LangCode::EN, string $from = LangCode::AUTO): Translate
     {
-        $params = $this->getRequestParams($query, $from, $to);
+        $params = $this->getRequestParams($query, $to, $from);
 		try {
 			// 配置请求参数
 			// 请求登录接口
@@ -41,7 +41,7 @@ class AlibabaCloudProvider extends AbstractProvider
         ]));
     }
 
-    protected function getRequestParams(string $q, string $from, string $to): array
+    protected function getRequestParams(string $q, string $to, string $from): array
     {
         $params = [
             'Action' => 'TranslateGeneral',
@@ -82,7 +82,7 @@ class AlibabaCloudProvider extends AbstractProvider
         return $this->encodeSign($signMethod, $strToSign, $secret);
     }
 
-    private function getRpcStrToSign($query): string
+    private function getRpcStrToSign(array $query): string
     {
         ksort($query);
 
@@ -99,7 +99,7 @@ class AlibabaCloudProvider extends AbstractProvider
         return 'GET' . '&' . rawurlencode('/') . '&' . rawurlencode($str);
     }
 
-    private function encodeSign($signMethod, $strToSign, $secret): ?string
+    private function encodeSign(string $signMethod, string $strToSign, string $secret): ?string
     {
         return match ($signMethod) {
             'HMAC-SHA256' => base64_encode(hash_hmac('sha256', $strToSign, $secret, true)),
@@ -107,7 +107,7 @@ class AlibabaCloudProvider extends AbstractProvider
         };
     }
 
-    private function isErrorResponse($data): bool
+    private function isErrorResponse(array $data): bool
     {
         return !isset($data['Code']) || ((int)$data['Code']) !== 200;
     }
