@@ -9,7 +9,7 @@
 composer require carlin/translate-drivers
 ```
 
-### Baidu
+### 百度
 
 ```php
 use Carlin\TranslateDrivers\Supports\Provider;
@@ -42,7 +42,7 @@ $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::GOOGLE)->translate($query);
 ```
 
-### Alibaba
+### 阿里云翻译
 
 ```php
 use Carlin\TranslateDrivers\Supports\Provider;
