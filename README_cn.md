@@ -27,6 +27,10 @@ $config = [
 $manager = new TranslateManager($config);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::BAIDU)->translate($query,  LangCode::EN);
+
+$res->getDst(); //translate text
+$res->getSrc(); //origin text
+$res->getOriginal(); //original result
 ```
 
 
