@@ -4,7 +4,7 @@
 #### 环境要求
 - `PHP` >= 8.0
 
-#### install
+## install
 ```
 composer require carlin/translate-drivers
 ```
