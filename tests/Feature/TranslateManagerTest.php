@@ -14,17 +14,30 @@ class TranslateManagerTest extends TestCase
 	public function testGoogle(): void
 	{
 		$query = '我喜欢你的冷态度 :test';
-		$res = $this->manager->driver(Provider::GOOGLE)->translate($query, LangCode::DE);
+		$res = $this->manager->driver(Provider::GOOGLE)->translate($query);
+		$this->assertIsObject($res);
+		$this->assertInstanceOf(Translate::class, $res);
+		echo $res->getDst();
+
+		$res = $this->manager->google()->translate($query, LangCode::DE);
 		$this->assertIsObject($res);
 		$this->assertInstanceOf(Translate::class, $res);
 		echo $res->getDst();
 	}
 
 
+
+
 	public function testBaidu(): void
 	{
 		$query = '我喜欢你的冷态度 :test';
 		$res = $this->manager->driver(Provider::BAIDU)->translate($query);
+		$this->assertIsObject($res);
+		$this->assertInstanceOf(Translate::class, $res);
+		echo $res->getDst();
+
+
+		$res = $this->manager->baidu()->translate($query, LangCode::DE);
 		$this->assertIsObject($res);
 		$this->assertInstanceOf(Translate::class, $res);
 		echo $res->getDst();
@@ -35,6 +48,11 @@ class TranslateManagerTest extends TestCase
 	{
 		$query = '我喜欢你的冷态度 :test';
 		$res = $this->manager->driver(Provider::ALIBABA_CLOUD)->translate($query);
+		$this->assertIsObject($res);
+		$this->assertInstanceOf(Translate::class, $res);
+		echo $res->getDst();
+
+		$res = $this->manager->alibabaCloud()->translate($query, LangCode::DE);
 		$this->assertIsObject($res);
 		$this->assertInstanceOf(Translate::class, $res);
 		echo $res->getDst();
