@@ -30,6 +30,8 @@ $config = [
 $manager = new TranslateManager($config);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::BAIDU)->translate($query, LangCode::EN);
+//or
+$res = $manager->baidu()->translate($query, LangCode::EN);
 
 $res->getDst(); //translate text
 $res->getSrc(); //origin text
@@ -52,6 +54,9 @@ $config = [
 $manager = new TranslateManager($config);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::GOOGLE)->translate($query, LangCode::EN);
+
+//or
+$res = $manager->google()->translate($query, LangCode::EN);
 ```
 
 ### Alibaba cloud
@@ -72,6 +77,8 @@ $config = [
 $manager = new TranslateManager($config);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::ALIBABA_CLOUD)->translate($query, LangCode::EN);
+//or
+$res = $manager->alibabaCloud()->translate($query, LangCode::EN);
 ```
 
 ## Custom driver

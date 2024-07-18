@@ -13,6 +13,11 @@ use Closure;
 use InvalidArgumentException;
 use RuntimeException;
 
+/**
+ * @method static BaiduProvider baidu()
+ * @method static GoogleProvider google()
+ * @method static AlibabaCloudProvider alibabaCloud()
+ */
 class TranslateManager
 {
     /**
@@ -170,4 +175,9 @@ class TranslateManager
     {
         return $this->customDrivers[$driver]($this->config->toArray());
     }
+
+	public function __call($service, $config = []): AbstractProvider
+	{
+		return $this->driver($service);
+	}
 }
