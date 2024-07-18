@@ -14,9 +14,9 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * @method static BaiduProvider baidu()
- * @method static GoogleProvider google()
- * @method static AlibabaCloudProvider alibabaCloud()
+ * @method BaiduProvider baidu()
+ * @method GoogleProvider google()
+ * @method AlibabaCloudProvider alibabaCloud()
  */
 class TranslateManager
 {
