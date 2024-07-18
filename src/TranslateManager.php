@@ -14,9 +14,9 @@ use InvalidArgumentException;
 use RuntimeException;
 
 /**
- * @method BaiduProvider baidu()
- * @method GoogleProvider google()
- * @method AlibabaCloudProvider alibabaCloud()
+ * @method static BaiduProvider baidu(?array $config = null)
+ * @method static GoogleProvider google(?array $config = null)
+ * @method static AlibabaCloudProvider alibabaCloud(?array $config = null)
  */
 class TranslateManager
 {
@@ -51,9 +51,9 @@ class TranslateManager
     /**
      * TranslateManager constructor.
      */
-    public function __construct(array $config)
+    public function __construct(array $configs = [])
     {
-		$this->config($config);
+		$this->config($configs);
     }
 
     /**
@@ -75,12 +75,12 @@ class TranslateManager
     /**
      * Get a driver instance.
      */
-    public function driver(string $driver = null): AbstractProvider
+    public function driver(?string $driver = null, ?array $config = null): AbstractProvider
     {
         $driver = $driver ?: $this->getDefaultDriver();
 
         if (! isset($this->drivers[$driver])) {
-            $this->drivers[$driver] = $this->createDriver($driver);
+            $this->drivers[$driver] = $this->createDriver($driver, $config);
         }
 
         return $this->drivers[$driver];
@@ -152,12 +152,12 @@ class TranslateManager
      *
      * @throws InvalidArgumentException
      */
-    protected function createDriver(string $driver): AbstractProvider
+    protected function createDriver(string $driver, ?array $config = null): AbstractProvider
     {
         if (isset($this->initialDrivers[$driver])) {
             $provider = $this->initialDrivers[$driver];
             return $this->buildProvider($provider, $this->formatConfig(
-                $this->config['drivers'][$driver] ?? []
+				$config ?? $this->config['drivers'][$driver] ?? []
             ));
         }
 
@@ -176,8 +176,13 @@ class TranslateManager
         return $this->customDrivers[$driver]($this->config->toArray());
     }
 
-	public function __call($service, $config = []): AbstractProvider
+	public function __call($service, $config): AbstractProvider
 	{
-		return $this->driver($service);
+		return $this->driver($service, $config[0] ?? null);
+	}
+
+	public static function __callStatic($driver, $config): AbstractProvider
+	{
+		return (new self())->driver($driver, $config[0] ?? null);
 	}
 }

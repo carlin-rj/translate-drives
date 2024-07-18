@@ -19,7 +19,7 @@ use Carlin\TranslateDrivers\TranslateManager;
 use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
-$config = [
+$configs = [
     'drivers' => [
         Provider::BAIDU => [
             'app_id'  => 'xxx',
@@ -27,15 +27,20 @@ $config = [
         ],
     ],
 ];
-$manager = new TranslateManager($config);
+$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::BAIDU)->translate($query, LangCode::EN);
 //or
-$res = $manager->baidu()->translate($query, LangCode::EN);
+TranslateManager::baidu($you_config = [])->translate($query, LangCode::EN);
 
 $res->getDst(); //translate text
 $res->getSrc(); //origin text
 $res->getOriginal(); //original result
+
+
+//Simple configuration
+
+
 ```
 
 
@@ -46,17 +51,16 @@ use Carlin\TranslateDrivers\TranslateManager;
 use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
-$config = [
+$configs = [
     'drivers' => [
         Provider::GOOGLE => [],
     ],
 ];
-$manager = new TranslateManager($config);
+$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::GOOGLE)->translate($query, LangCode::EN);
-
 //or
-$res = $manager->google()->translate($query, LangCode::EN);
+$res = TranslateManager::google()->translate($query, LangCode::EN);
 ```
 
 ### Alibaba cloud
@@ -66,7 +70,7 @@ use Carlin\TranslateDrivers\TranslateManager;
 use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
-$config = [
+$configs = [
     'drivers' => [
         Provider::ALIBABA_CLOUD => [
             'app_id'  => 'xxx',
@@ -74,11 +78,11 @@ $config = [
         ],
     ],
 ];
-$manager = new TranslateManager($config);
+$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::ALIBABA_CLOUD)->translate($query, LangCode::EN);
 //or
-$res = $manager->alibabaCloud()->translate($query, LangCode::EN);
+$res = TranslateManager::alibabaCloud($you_config = [])->translate($query, LangCode::EN);
 ```
 
 ## Custom driver
@@ -112,7 +116,7 @@ class MyTranslateDriver extends AbstractProvider
     }
 }
 
-$config = [
+$configs = [
     'drivers' => [
         'my_driver' => [
             'app_id'  => 'xxx',
@@ -121,10 +125,10 @@ $config = [
     ],
 ];
 
-$manager = new TranslateManager($config);
+$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
-$res = $manager->extend('my_driver', function ($allConfig) {
-    $config = $allConfig['drivers']['my_driver'] ?? [];
+$res = $manager->extend('my_driver', function ($configs) {
+    $config = $configs['drivers']['my_driver'] ?? [];
     //you configuration code
     return new MyTranslateDriver(config:$config);
 })->driver('my_driver')->translate($query);
@@ -140,12 +144,12 @@ use Carlin\TranslateDrivers\TranslateManager;
 use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
-$config = [
+$configs = [
     'drivers' => [
         Provider::GOOGLE => [],
     ],
 ];
-$manager = new TranslateManager($config);
+$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::GOOGLE)->preserveParameters()->translate($query, LangCode::EN); //I like your cold attitude :test
 ```
@@ -158,12 +162,12 @@ use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
 
-$config = [
+$configs = [
     'drivers' => [
         Provider::GOOGLE => [],
     ],
 ];
-$manager = new TranslateManager($config);
+$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 {{test}}';
 $res = $manager->driver(Provider::GOOGLE)->preserveParameters('/\{\{([^}]+)\}\}/')->translate($query, LangCode::EN); //I like your cold attitude :test
 ```

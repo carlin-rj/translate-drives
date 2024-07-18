@@ -7,6 +7,7 @@ use Carlin\TranslateDrivers\Supports\LangCode;
 use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\Translate;
 use Carlin\TranslateDrivers\Tests\TestCase;
+use Carlin\TranslateDrivers\TranslateManager;
 
 class TranslateManagerTest extends TestCase
 {
@@ -19,10 +20,9 @@ class TranslateManagerTest extends TestCase
 		$this->assertInstanceOf(Translate::class, $res);
 		echo $res->getDst();
 
-		$res = $this->manager->google()->translate($query, LangCode::DE);
+		$res = TranslateManager::google()->translate($query, LangCode::DE);
 		$this->assertIsObject($res);
 		$this->assertInstanceOf(Translate::class, $res);
-		echo $res->getDst();
 	}
 
 
