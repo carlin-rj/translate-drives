@@ -28,8 +28,8 @@ $manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::BAIDU)->translate($query,  LangCode::EN);
 
-//or
-TranslateManager::baidu($you_config = [])->translate($query, LangCode::EN);
+//Simpler calling
+$res = TranslateManager::baidu($you_config = [])->translate($query, LangCode::EN);
 
 $res->getDst(); //translate text
 $res->getSrc(); //origin text
@@ -136,35 +136,21 @@ $res = $manager->extend('my_driver', function ($configs) {
 默认正则表达式是 ```/:(\w+)/``` ，它涵盖以 : 开头的参数。对于翻译 Laravel 和其他框架的语言文件很有用。您还可以传递自定义正则表达式来修改参数语法。
 ```php
 use Carlin\TranslateDrivers\TranslateManager;
-use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
-$configs = [
-    'drivers' => [
-        Provider::GOOGLE => [],
-    ],
-];
-$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
-$res = $manager->driver(Provider::GOOGLE)->preserveParameters()->translate($query, LangCode::EN); //I like your cold attitude :test
+$res = TranslateManager::google()->preserveParameters()->translate($query, LangCode::EN); //I like your cold attitude :test
 ```
 
 或者使用自定义正则表达式:
 
 ```php
 use Carlin\TranslateDrivers\TranslateManager;
-use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
 
-$configs = [
-    'drivers' => [
-        Provider::GOOGLE => [],
-    ],
-];
-$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 {{test}}';
-$res = $manager->driver(Provider::GOOGLE)->preserveParameters('/\{\{([^}]+)\}\}/')->translate($query, LangCode::EN); //I like your cold attitude {{test}}
+$res = TranslateManager::google()->preserveParameters('/\{\{([^}]+)\}\}/')->translate($query, LangCode::EN); //I like your cold attitude {{test}}
 ```
 
 

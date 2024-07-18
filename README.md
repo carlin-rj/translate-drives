@@ -30,16 +30,13 @@ $configs = [
 $manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::BAIDU)->translate($query, LangCode::EN);
-//or
-TranslateManager::baidu($you_config = [])->translate($query, LangCode::EN);
+
+//Simpler calling
+$res = TranslateManager::baidu($you_config = [])->translate($query, LangCode::EN);
 
 $res->getDst(); //translate text
 $res->getSrc(); //origin text
 $res->getOriginal(); //original result
-
-
-//Simple configuration
-
 
 ```
 
@@ -59,7 +56,8 @@ $configs = [
 $manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::GOOGLE)->translate($query, LangCode::EN);
-//or
+
+//Simpler calling
 $res = TranslateManager::google()->translate($query, LangCode::EN);
 ```
 
@@ -81,7 +79,8 @@ $configs = [
 $manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
 $res = $manager->driver(Provider::ALIBABA_CLOUD)->translate($query, LangCode::EN);
-//or
+
+//Simpler calling
 $res = TranslateManager::alibabaCloud($you_config = [])->translate($query, LangCode::EN);
 ```
 
@@ -141,35 +140,21 @@ The ```preserveParameters()``` method allows you to preserve certain parameters 
 Default regex is ```/:(\w+)/``` which covers parameters starting with :. Useful for translating language files of Laravel and other frameworks. You can also pass your custom regex to modify the parameter syntax.
 ```php
 use Carlin\TranslateDrivers\TranslateManager;
-use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
-$configs = [
-    'drivers' => [
-        Provider::GOOGLE => [],
-    ],
-];
-$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 :test';
-$res = $manager->driver(Provider::GOOGLE)->preserveParameters()->translate($query, LangCode::EN); //I like your cold attitude :test
+$res = TranslateManager::google()->preserveParameters()->translate($query, LangCode::EN); //I like your cold attitude :test
 ```
 
 Or use custom regex:
 
 ```php
 use Carlin\TranslateDrivers\TranslateManager;
-use Carlin\TranslateDrivers\Supports\Provider;
 use Carlin\TranslateDrivers\Supports\LangCode;
 
 
-$configs = [
-    'drivers' => [
-        Provider::GOOGLE => [],
-    ],
-];
-$manager = new TranslateManager($configs);
 $query = '我喜欢你的冷态度 {{test}}';
-$res = $manager->driver(Provider::GOOGLE)->preserveParameters('/\{\{([^}]+)\}\}/')->translate($query, LangCode::EN); //I like your cold attitude :test
+$res = TranslateManager::google()->preserveParameters('/\{\{([^}]+)\}\}/')->translate($query, LangCode::EN); //I like your cold attitude :test
 ```
 
 ## If you have a better translation driver, please feel free to submit a PR
