@@ -15,9 +15,19 @@ use Throwable;
  */
 class BaiduProvider extends AbstractProvider
 {
-    public const HTTP_URL = 'http://api.fanyi.baidu.com/api/trans/vip/translate';
+	public const HTTP_URL = 'http://api.fanyi.baidu.com/api/trans/vip/translate';
 
     public const HTTPS_URL = 'https://fanyi-api.baidu.com/api/trans/vip/translate';
+
+	protected array $langMap = [
+		LangCode::JA => 'jp', // 日语
+		LangCode::KO => 'kor', // 韩语
+		LangCode::FR => 'fra', // 法语
+		LangCode::ES => 'spa', // 西班牙语
+		LangCode::ZH_TW => 'cht', // 繁体中文
+		LangCode::VI => 'vie', // 越南语
+	];
+
 
 	/**
 	 * @param string $q
@@ -30,6 +40,9 @@ class BaiduProvider extends AbstractProvider
 	 */
     protected function getRequestParams(string $q, string $from = LangCode::AUTO, string $to = LangCode::EN): array
 	{
+		$to = $this->langMap($to);
+		$from = $this->langMap($from);
+
         $params = [
             'q' => $q,
             'from' => $from,

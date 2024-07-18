@@ -10,8 +10,7 @@ use Throwable;
 
 class GoogleProvider extends AbstractProvider
 {
-	private array $langMap = [
-		LangCode::ZH    => 'zh-CN',
+	protected array $langMap = [
 		LangCode::ZH_TW => 'zh-TW',
 	];
 
@@ -30,12 +29,6 @@ class GoogleProvider extends AbstractProvider
             'dst' => $data
         ]));
     }
-
-
-	public function langMap(string $langCode): string
-	{
-		return $this->langMap[$langCode] ?? $langCode;
-	}
 
     protected function mapTranslateResult(array $translateResult): array
     {

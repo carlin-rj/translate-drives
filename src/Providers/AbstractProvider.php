@@ -16,6 +16,8 @@ abstract class AbstractProvider implements ProviderInterface
 
     public const HTTPS_URL = '';
 
+	protected array $langMap = [];
+
     /**
      * Provider name.
      *
@@ -61,6 +63,11 @@ abstract class AbstractProvider implements ProviderInterface
 
         $this->config = new Config($config);
     }
+
+	protected function langMap(string $langCode): string
+	{
+		return $this->langMap[$langCode] ?? $langCode;
+	}
 
     /**
      * @return string

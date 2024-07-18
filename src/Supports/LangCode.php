@@ -24,7 +24,7 @@ class LangCode
     public const  JA = 'ja';
     /** 法语 */
     public const  FR = 'fr';
-    /** 印尼 */
+    /** 马来 */
     public const  MS = 'ms';
     /** 泰语 */
     public const  TH = 'th';
