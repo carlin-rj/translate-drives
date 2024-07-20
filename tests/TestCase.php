@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Carlin\TranslateDrivers\Tests;
+namespace Carlin\TranslateDrives\Tests;
 
-use Carlin\TranslateDrivers\Supports\Provider;
-use Carlin\TranslateDrivers\TranslateManager;
+use Carlin\TranslateDrives\Supports\Provider;
+use Carlin\TranslateDrives\TranslateManager;
 
 /**
  * @internal
@@ -20,7 +20,7 @@ class TestCase extends \PHPUnit\Framework\TestCase
 	{
 		return [
 			// 驱动
-			'drivers' => [
+			'drives' => [
 				// 免费版
 				Provider::GOOGLE => [
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Providers;
+namespace Carlin\TranslateDrives\Providers;
 
-use Carlin\TranslateDrivers\Contracts\ProviderInterface;
-use Carlin\TranslateDrivers\Supports\Config;
-use Carlin\TranslateDrivers\Supports\LangCode;
-use Carlin\TranslateDrivers\Supports\Translate;
+use Carlin\TranslateDrives\Contracts\ProviderInterface;
+use Carlin\TranslateDrives\Supports\Config;
+use Carlin\TranslateDrives\Supports\LangCode;
+use Carlin\TranslateDrives\Supports\Translate;
 
 /**
  * Class AbstractProvider.

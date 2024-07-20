@@ -1,5 +1,5 @@
 <?php
-namespace Carlin\TranslateDrivers\Traits;
+namespace Carlin\TranslateDrives\Traits;
 
 trait ArrayAccessTrait
 {

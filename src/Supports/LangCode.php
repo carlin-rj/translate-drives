@@ -1,6 +1,6 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Supports;
+namespace Carlin\TranslateDrives\Supports;
 
 class LangCode
 {

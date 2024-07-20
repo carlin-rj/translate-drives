@@ -1,14 +1,14 @@
 <?php
 
-namespace Carlin\TranslateDrivers;
+namespace Carlin\TranslateDrives;
 
-use Carlin\TranslateDrivers\Contracts\ProviderInterface;
-use Carlin\TranslateDrivers\Providers\AbstractProvider;
-use Carlin\TranslateDrivers\Providers\AlibabaCloudProvider;
-use Carlin\TranslateDrivers\Providers\BaiduProvider;
-use Carlin\TranslateDrivers\Providers\GoogleProvider;
-use Carlin\TranslateDrivers\Supports\Config;
-use Carlin\TranslateDrivers\Supports\Provider;
+use Carlin\TranslateDrives\Contracts\ProviderInterface;
+use Carlin\TranslateDrives\Providers\AbstractProvider;
+use Carlin\TranslateDrives\Providers\AlibabaCloudProvider;
+use Carlin\TranslateDrives\Providers\BaiduProvider;
+use Carlin\TranslateDrives\Providers\GoogleProvider;
+use Carlin\TranslateDrives\Supports\Config;
+use Carlin\TranslateDrives\Supports\Provider;
 use Closure;
 use InvalidArgumentException;
 use RuntimeException;
@@ -28,12 +28,12 @@ class TranslateManager
     /**
      * The registered custom driver creators.
      */
-    protected array $customDrivers = [];
+    protected array $customDrives = [];
 
     /**
-     * The initial drivers.
+     * The initial drives.
      */
-    protected array $initialDrivers = [
+    protected array $initialDrives = [
 		Provider::BAIDU         => BaiduProvider::class,
 		Provider::GOOGLE        => GoogleProvider::class,
 		Provider::ALIBABA_CLOUD => AlibabaCloudProvider::class,
@@ -42,11 +42,11 @@ class TranslateManager
     protected $defaultDriver;
 
     /**
-     * The array of created "drivers".
+     * The array of created "drives".
      *
      * @var ProviderInterface[]
      */
-    protected array $drivers = [];
+    protected array $drives = [];
 
     /**
      * TranslateManager constructor.
@@ -79,11 +79,11 @@ class TranslateManager
     {
         $driver = $driver ?: $this->getDefaultDriver();
 
-        if (! isset($this->drivers[$driver])) {
-            $this->drivers[$driver] = $this->createDriver($driver, $config);
+        if (! isset($this->drives[$driver])) {
+            $this->drives[$driver] = $this->createDriver($driver, $config);
         }
 
-        return $this->drivers[$driver];
+        return $this->drives[$driver];
     }
 
     public function getDefaultDriver()
@@ -109,19 +109,19 @@ class TranslateManager
      */
     public function extend(string $driver, Closure $callback): self
     {
-        $this->customDrivers[$driver] = $callback;
+        $this->customDrives[$driver] = $callback;
 
         return $this;
     }
 
     /**
-     * Get all of the created "drivers".
+     * Get all of the created "drives".
      *
      * @return AbstractProvider[]
      */
-    public function getDrivers(): array
+    public function getDrives(): array
     {
-        return $this->drivers;
+        return $this->drives;
     }
 
     /**
@@ -154,14 +154,14 @@ class TranslateManager
      */
     protected function createDriver(string $driver, ?array $config = null): AbstractProvider
     {
-        if (isset($this->initialDrivers[$driver])) {
-            $provider = $this->initialDrivers[$driver];
+        if (isset($this->initialDrives[$driver])) {
+            $provider = $this->initialDrives[$driver];
             return $this->buildProvider($provider, $this->formatConfig(
-				$config ?? $this->config['drivers'][$driver] ?? []
+				$config ?? $this->config['drives'][$driver] ?? []
             ));
         }
 
-        if (isset($this->customDrivers[$driver])) {
+        if (isset($this->customDrives[$driver])) {
             return $this->callCustomDriver($driver);
         }
 
@@ -173,7 +173,7 @@ class TranslateManager
      */
     protected function callCustomDriver(string $driver): AbstractProvider
     {
-        return $this->customDrivers[$driver]($this->config->toArray());
+        return $this->customDrives[$driver]($this->config->toArray());
     }
 
 	public function __call($service, $config): AbstractProvider

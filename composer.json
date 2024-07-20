@@ -1,26 +1,25 @@
 {
-    "name": "carlin/translate-drivers",
+    "name": "carlin/translate-drives",
     "type": "library",
     "license": "Apache-2.0",
     "description": "Baidu, Alibaba Cloud Translate, and Google Translate driver package, ready to use out of the box",
     "keywords": [
-        "driver",
         "php",
         "translate",
         "baidu",
         "alibaba cloud",
         "google translate",
         "free google translate",
-        "translate drivers"
+        "translate drives"
     ],
     "autoload": {
         "psr-4": {
-            "Carlin\\TranslateDrivers\\": "src/"
+            "Carlin\\TranslateDrives\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Carlin\\TranslateDrivers\\Tests\\": "tests"
+            "Carlin\\TranslateDrives\\Tests\\": "tests"
         }
     },
     "authors": [

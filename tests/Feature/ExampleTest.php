@@ -1,9 +1,9 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Tests\Feature;
+namespace Carlin\TranslateDrives\Tests\Feature;
 
 
-use Carlin\TranslateDrivers\Tests\TestCase;
+use Carlin\TranslateDrives\Tests\TestCase;
 
 class ExampleTest extends TestCase
 {

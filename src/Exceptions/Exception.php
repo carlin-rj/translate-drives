@@ -1,6 +1,6 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Exceptions;
+namespace Carlin\TranslateDrives\Exceptions;
 
 class Exception extends \Exception
 {

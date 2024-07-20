@@ -1,9 +1,9 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Contracts;
+namespace Carlin\TranslateDrives\Contracts;
 
-use Carlin\TranslateDrivers\Supports\LangCode;
-use Carlin\TranslateDrivers\Supports\Translate;
+use Carlin\TranslateDrives\Supports\LangCode;
+use Carlin\TranslateDrives\Supports\Translate;
 
 /**
  * Interface ProviderInterface.

@@ -1,10 +1,10 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Supports;
+namespace Carlin\TranslateDrives\Supports;
 
 
 use ArrayAccess;
-use Carlin\TranslateDrivers\Traits\ArrayAccessTrait;
+use Carlin\TranslateDrives\Traits\ArrayAccessTrait;
 
 class Config implements ArrayAccess
 {

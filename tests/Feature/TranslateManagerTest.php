@@ -1,13 +1,13 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Tests\Feature;
+namespace Carlin\TranslateDrives\Tests\Feature;
 
-use Carlin\TranslateDrivers\Providers\AbstractProvider;
-use Carlin\TranslateDrivers\Supports\LangCode;
-use Carlin\TranslateDrivers\Supports\Provider;
-use Carlin\TranslateDrivers\Supports\Translate;
-use Carlin\TranslateDrivers\Tests\TestCase;
-use Carlin\TranslateDrivers\TranslateManager;
+use Carlin\TranslateDrives\Providers\AbstractProvider;
+use Carlin\TranslateDrives\Supports\LangCode;
+use Carlin\TranslateDrives\Supports\Provider;
+use Carlin\TranslateDrives\Supports\Translate;
+use Carlin\TranslateDrives\Tests\TestCase;
+use Carlin\TranslateDrives\TranslateManager;
 
 class TranslateManagerTest extends TestCase
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace Carlin\TranslateDrivers\Providers;
+namespace Carlin\TranslateDrives\Providers;
 
-use Carlin\TranslateDrivers\Exceptions\TranslateException;
-use Carlin\TranslateDrivers\Supports\LangCode;
-use Carlin\TranslateDrivers\Supports\Translate;
+use Carlin\TranslateDrives\Exceptions\TranslateException;
+use Carlin\TranslateDrives\Supports\LangCode;
+use Carlin\TranslateDrives\Supports\Translate;
 use GuzzleHttp\Client;
 use Throwable;
 
