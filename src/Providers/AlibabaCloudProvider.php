@@ -35,7 +35,7 @@ class AlibabaCloudProvider extends AbstractProvider
 			$responseBody = $response->getBody()->getContents();
 			$data = json_decode($responseBody, true);
 		}catch (\Throwable $e) {
-			throw new TranslateException($e->getMessage());
+			$this->rethrowTranslateFailure($e);
 		}
         if ($this->isErrorResponse($data)) {
             $this->handleErrorResponse($data);

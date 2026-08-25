@@ -2,9 +2,10 @@
 
 namespace Carlin\TranslateDrives\Providers;
 
-use Carlin\TranslateDrives\Exceptions\TranslateException;
+use Carlin\TranslateDrives\Exceptions\RateLimitedException;
 use Carlin\TranslateDrives\Supports\LangCode;
 use Carlin\TranslateDrives\Supports\Translate;
+use Stichoza\GoogleTranslate\Exceptions\RateLimitException as GoogleRateLimitException;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use Throwable;
 
@@ -20,8 +21,10 @@ class GoogleProvider extends AbstractProvider
 			$to = $this->langMap($to);
 			$from = $this->langMap($from);
 			$data = GoogleTranslate::trans($query, $to, $from === LangCode::AUTO ? null : $from);
+		}catch (GoogleRateLimitException $exception) {
+			throw RateLimitedException::fromThrowable($exception);
 		}catch (Throwable $exception) {
-			throw new TranslateException($exception->getMessage());
+			$this->rethrowTranslateFailure($exception);
 		}
 
         return new Translate($this->mapTranslateResult([

@@ -91,7 +91,7 @@ class BaiduProvider extends AbstractProvider
 			$responseBody = $response->getBody()->getContents();
 			$data = json_decode($responseBody, true);
 		}catch (Throwable $e) {
-			throw new TranslateException($e->getMessage());
+			$this->rethrowTranslateFailure($e);
 		}
 		return new Translate($this->mapTranslateResult($data));
     }

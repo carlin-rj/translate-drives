@@ -3,9 +3,13 @@
 namespace Carlin\TranslateDrives\Providers;
 
 use Carlin\TranslateDrives\Contracts\ProviderInterface;
+use Carlin\TranslateDrives\Exceptions\RateLimitedException;
+use Carlin\TranslateDrives\Exceptions\TranslateException;
 use Carlin\TranslateDrives\Supports\Config;
 use Carlin\TranslateDrives\Supports\LangCode;
 use Carlin\TranslateDrives\Supports\Translate;
+use GuzzleHttp\Exception\RequestException;
+use Throwable;
 
 /**
  * Class AbstractProvider.
@@ -92,6 +96,20 @@ abstract class AbstractProvider implements ProviderInterface
 	{
 		return $this->config['url'] ?? (($this->config['ssl'] ?? false) ? static::HTTPS_URL : static::HTTP_URL);
 	}
+
+    /**
+     * @throws RateLimitedException
+     * @throws TranslateException
+     */
+    protected function rethrowTranslateFailure(Throwable $exception): never
+    {
+        if ($exception instanceof RequestException && $exception->hasResponse() && $exception->getResponse()->getStatusCode() === 429) {
+            throw RateLimitedException::fromThrowable($exception);
+        }
+
+        $code = is_numeric($exception->getCode()) ? (int) $exception->getCode() : 0;
+        throw new TranslateException($exception->getMessage(), $code, $exception);
+    }
 
     abstract protected function handlerTranslate(string $query, string $to = LangCode::EN, string $from = LangCode::AUTO):Translate;
 
